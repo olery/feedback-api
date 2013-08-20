@@ -130,7 +130,7 @@ $information = array('custom_id' => 'hotela',
                                       'custom_fields' => array('dining_preference' => 'salmon')));
 $information_json = json_encode($information);
                                       
-//Issue with PHP you have to set MCRYPT_RIJNDAEL_128 for 256 encryption.
+//Issue with PHP you have to set MCRYPT_RIJNDAEL_128 for 256 encryption, for compliance reasons.
 $encrypted_json = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $information_json, MCRYPT_MODE_CBC, $iv));
 
 $url_friendly = urlencode($encrypted_json);
