@@ -119,11 +119,19 @@ In PHP it would look something like this:
 ```php
 <?php
 
+
+//should be a 256-bit size key.
 $key = "the shared secret you got from Olery";
+
+function addpadding($string, $blocksize = 16){
+    $len = strlen($string);
+    $pad = $blocksize - ($len % $blocksize);
+    $string .= str_repeat(chr($pad), $pad);
+    return $string;
+}
 
 $iv_size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CBC);
 $iv = mcrypt_create_iv($iv_size, MCRYPT_DEV_RANDOM);
-  
 
 $information = array('custom_id' => 'hotela', 
                      'tag' => 'stay',
@@ -132,14 +140,16 @@ $information = array('custom_id' => 'hotela',
                                       'custom_fields' => array('dining_preference' => 'salmon')));
 $information_json = json_encode($information);
                                       
-//Issue with PHP you have to set MCRYPT_RIJNDAEL_128 for 256 encryption, for compliance reasons.
-$encrypted_json = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $information_json, MCRYPT_MODE_CBC, $iv));
+//Issue with PHP you have to set MCRYPT_RIJNDAEL_128 for 256 encryption.
+$encrypted_json = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, addpadding($information_json), MCRYPT_MODE_CBC, $iv));
 
 $url_friendly = urlencode($encrypted_json);
 
 $encoded_iv = urlencode(base64_encode($iv));
 
-$url = "http://feed.ba/ck-thegroup?i=$url_friendly&iv=$encoded_iv";
+$url = "http://feed.ba/ck-thegroup/?i=$url_friendly&iv=$encoded_iv";
+
+echo $url;                                     
 
 ?>
 ```
