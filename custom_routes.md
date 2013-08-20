@@ -112,6 +112,38 @@ url_friendly = Base64::encode(encrypted_json)
 url = "http://feed.ba/ck-thegroup?i=#{url_friendly}&iv=#{iv}"
 ```
 
+In PHP it would look something like this:
+
+```php
+<?php
+
+$key = "the shared secret you got from Olery";
+
+$iv_size = mcrypt_get_iv_size(MCRYPT_CAST_256, MCRYPT_MODE_CBC);
+$iv = mcrypt_create_iv($iv_size, MCRYPT_DEV_RANDOM);
+  
+
+$information = array('custom_id' => 'hotela', 
+                     'tag' => 'stay',
+                     'guest' => array('name' => 'Giannis',
+                                      'arrival_date' => '2013-08-16',
+                                      'custom_fields' => array('dining_preference' => 'salmon')));
+$information_json = json_encode($information);
+                                      
+//Issue with PHP you have to set MCRYPT_RIJNDAEL_128 for 256 encryption.
+$encrypted_json = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $information_json, MCRYPT_MODE_CBC, $iv));
+
+$url_friendly = urlencode($encrypted_json);
+
+$encoded_iv = urlencode(base64_encode($iv));
+
+$url = "http://feed.ba/ck-thegroup?i=$url_friendly&iv=$encoded_iv";
+
+echo $url;                                     
+
+?>
+```
+
 Bonus
 -----
 
