@@ -101,14 +101,15 @@ information = { custom_id: 'hotela',
                 }
               }.to_json
 
-cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+cipher = OpenSSL::Cipher::AES.new(256, :CBC)
 cipher.encrypt
 
-key = cipher.random_key
+key = "the shared secret you got from Olery"
 iv = cipher.random_iv
 
-encrypted = cipher.update(information) + cipher.final
-url = "http://feed.ba/ck-thegroup?i=#{information}&iv=#{iv}"
+encrypted_json = cipher.update(information) + cipher.final
+url_friendly = Base64::encode(encrypted_json)
+url = "http://feed.ba/ck-thegroup?i=#{url_friendly}&iv=#{iv}"
 ```
 
 Bonus
