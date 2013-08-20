@@ -139,8 +139,6 @@ $encoded_iv = urlencode(base64_encode($iv));
 
 $url = "http://feed.ba/ck-thegroup?i=$url_friendly&iv=$encoded_iv";
 
-echo $url;                                     
-
 ?>
 ```
 
