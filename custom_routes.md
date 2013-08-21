@@ -90,7 +90,7 @@ In order to do this you create a valid JSON object string and encrypt is using
 standard AES encryption algorithm. In Ruby it would look something like this:
 
 ```ruby
-require 'openssl
+require 'openssl'
 require 'cgi'
 require 'base64'
 require 'json'
