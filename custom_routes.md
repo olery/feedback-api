@@ -90,7 +90,10 @@ In order to do this you create a valid JSON object string and encrypt is using
 standard AES encryption algorithm. In Ruby it would look something like this:
 
 ```ruby
-require 'openssl'
+require 'openssl
+require 'cgi'
+require 'base64'
+require 'json'
 
 information = { custom_id: 'hotela',
                 tag: 'stay',
@@ -102,16 +105,21 @@ information = { custom_id: 'hotela',
                   }
                 }
               }.to_json
-
+              
 cipher = OpenSSL::Cipher::AES.new(256, :CBC)
 cipher.encrypt
 
-key = "the shared secret you got from Olery"
+## 256-bit key.
+cipher.key = "the shared secret you got from Olery"
 iv = cipher.random_iv
 
+encoded_iv = URI.encode(Base64.encode64(iv))
+
 encrypted_json = cipher.update(information) + cipher.final
-url_friendly = Base64::encode(encrypted_json)
-url = "http://feed.ba/ck-thegroup?i=#{url_friendly}&iv=#{iv}"
+
+url_friendly = URI.encode(Base64.encode64(encrypted_json))
+
+url = URI.encode("http://feed.ba/ck-thegroup/?i=#{url_friendly}&iv=#{encoded_iv}")
 ```
 
 In PHP it would look something like this:
