@@ -21,6 +21,5 @@ requested manually so send us an Email if you need one.
 ## What can you do with the API?
 
 * [Send out post stay e-mails](guest_urls.md)
-* [Construct personalized feedback urls](guest_urls.md)
 * [Route custom URLs with Guest info to specific
   questionnaires](custom_routes.md)
