@@ -69,6 +69,7 @@ extra arguments. The parameters you can add are:
 * `guest-reason`: the reason for the guest staying at the location
 * `guest-room_number`: the number of the room the guest stayed in
 * `guest-custom_id`: a custom ID to identify a guest, this field can be set to any
+* `guest-language`: language of the guest
   value.
 
 
