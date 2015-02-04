@@ -114,6 +114,11 @@ cipher.encrypt
 
 ## 256-bit key.
 cipher.key = "the shared secret you got from Olery"
+
+## If we want a fixed IV we can use this instead. 
+#iv =  "some random string"
+#cipher.iv = iv
+
 iv = cipher.random_iv
 
 encoded_iv = URI.encode(Base64.encode64(iv))
@@ -138,6 +143,9 @@ decoded_params = Base64.decode64(url_params)
 decrypted_json = cipher_dec.update(decoded_params) + cipher_dec.final
 
 decrypted_hash = JSON.parse(decrypted_json)
+
+
+
 ```
 
 In PHP it would look something like this:
