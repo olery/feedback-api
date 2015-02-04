@@ -92,7 +92,7 @@ standard AES encryption algorithm. In Ruby it would look something like this:
 
 ```ruby
 require 'openssl'
-require 'cgi'
+require 'uri'
 require 'base64'
 require 'json'
 
@@ -107,6 +107,8 @@ information = { custom_id: 'hotela',
                 }
               }.to_json
               
+## Encryption
+
 cipher = OpenSSL::Cipher::AES.new(256, :CBC)
 cipher.encrypt
 
@@ -121,6 +123,21 @@ encrypted_json = cipher.update(information) + cipher.final
 url_friendly = URI.encode(Base64.encode64(encrypted_json))
 
 url = URI.encode("http://feed.ba/ck-thegroup/?i=#{url_friendly}&iv=#{encoded_iv}")
+
+## Decryption
+
+cipher_dec = OpenSSL::Cipher::AES.new(256, :CBC)
+cipher_dec.decrypt
+cipher_dec.key = "the shared secret you got from Olery"
+cipher_dec.iv = iv
+
+url_params = URI.decode(url_friendly)
+
+decoded_params = Base64.decode64(url_params)
+
+decrypted_json = cipher_dec.update(decoded_params) + cipher_dec.final
+
+decrypted_hash = JSON.parse(decrypted_json)
 ```
 
 In PHP it would look something like this:
