@@ -62,7 +62,7 @@ extra arguments. The parameters you can add are:
 * `guest-last_name`: the last name of the guest
 * `guest-reservation`: the reservation number of the guest
 * `guest-title`: the title of the guest
-* `guest-email` (required): the Email address of the guest
+* `guest-email`: the Email address of the guest
 * `guest-arrival_date`: the arrival date of the guest, preferrably in the format
   `YYYY-mm-dd`
 * `guest-departure_date`: the departure date of the guest, set to today by default.
