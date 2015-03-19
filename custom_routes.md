@@ -58,7 +58,8 @@ Adding Guest Information
 It is possible to add extra guest information to the custom url by sending it
 extra arguments. The parameters you can add are:
 
-* `guest-name`: the name of the guest
+* `guest-first-name`: the first name of the guest
+* * `guest-last-name`: the last name of the guest
 * `guest-reservation`: the reservation number of the guest
 * `guest-title`: the title of the guest
 * `guest-email` (required): the Email address of the guest
